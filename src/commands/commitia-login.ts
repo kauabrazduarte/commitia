@@ -324,5 +324,3 @@ export default async function commitiaLogin() {
     "\n" + chalk.hex("#666666").italic("  Feito com ❤️  por kaua.dev.br\n"),
   );
 }
-
-commitiaLogin();
