@@ -3,7 +3,9 @@
 > **Commit messages powered by AI.**
 Gere mensagens de commit inteligentes, consistentes e bonitas usando múltiplos provedores de IA — direto do seu terminal.
 
-![Exemplo do commitia](assets/commitia.gif)
+<div align="center">
+  <img src="assets/commitia.gif" alt="Exemplo do commitia" style="border-radius: 10px;">
+</div>
 
 ---
 
