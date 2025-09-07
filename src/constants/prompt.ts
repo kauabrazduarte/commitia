@@ -33,12 +33,11 @@ const PROMPT = `
  3. Se é uma correção de bug, use \`fix\`.
  4. Se alterar apenas estilo/formatação, use \`style\`.
  5. Mantenha a mensagem **curta e direta**.
+ 6. Você deve enviar APENAS a mensagem do commit, sem títulos, sem bloco de código. APENAS A MENSAGEM DO COMMIT!
 
  **Exemplo de commit gerado:**
 
- \`\`\`
  ✨ feat(auth): adiciona login com Google OAuth
- \`\`\`
 
  Aqui está a diff para analisar:
 
