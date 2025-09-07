@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "kaua.dev.br",
-  "license": "ISC",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "@ai-sdk/anthropic": "^2.0.12",
