@@ -11,7 +11,7 @@ Gere mensagens de commit inteligentes, consistentes e bonitas usando múltiplos 
 ![downloads](https://img.shields.io/npm/dt/commitia?color=%239b59b6&style=for-the-badge)
 ![typescript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=for-the-badge)
 ![contributions](https://img.shields.io/badge/contributions-welcome-%239b59b6?style=for-the-badge)
-![license](https://img.shields.io/github/license/SeuUser/commitia?color=%239b59b6&style=for-the-badge)
+![license](https://img.shields.io/github/license/kauabrazduarte/commitia?color=%239b59b6&style=for-the-badge)
 
 ---
 
