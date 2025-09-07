@@ -1,11 +1,10 @@
 import inquirer from "inquirer";
 import chalk from "chalk";
 import figlet from "figlet";
-import os from "os";
 import boxen from "boxen";
 import chalkAnimation from "chalk-animation";
-import * as fs from "fs";
 import gradient from "gradient-string";
+import Config from "../config/config";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -194,11 +193,6 @@ export default async function commitiaLogin() {
     apiKey,
   };
 
-  const userHome = os.homedir();
-  if (!fs.existsSync(`${userHome}/.commitia`)) {
-    fs.mkdirSync(`${userHome}/.commitia`);
-  }
-
   console.log("\n");
   const savingBox = boxen(chalk.hex("#45B7D1")("💾 Salvando configuração..."), {
     padding: { top: 1, bottom: 1, left: 3, right: 3 },
@@ -210,15 +204,14 @@ export default async function commitiaLogin() {
   console.log(savingBox);
   await sleep(1500);
 
-  fs.writeFileSync(
-    `${userHome}/.commitia/config.json`,
-    JSON.stringify(config, null, 2),
-  );
+  Config.define({
+    apiKey,
+    provider,
+    model,
+  });
 
-  // PASSO 6: Tela de sucesso final
   console.clear();
 
-  // Header de sucesso
   console.log(
     boxen(
       greenGradient(
@@ -319,7 +312,6 @@ export default async function commitiaLogin() {
     }),
   );
 
-  // Footer minimalista
   console.log(
     "\n" + chalk.hex("#666666").italic("  Feito com ❤️  por kaua.dev.br\n"),
   );

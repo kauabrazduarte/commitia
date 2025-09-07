@@ -14,6 +14,11 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@ai-sdk/anthropic": "^2.0.12",
+    "@ai-sdk/google": "^2.0.12",
+    "@ai-sdk/openai": "^2.0.24",
+    "@ai-sdk/xai": "^2.0.16",
+    "ai": "^5.0.34",
     "boxen": "^8.0.1",
     "chalk": "^5.6.0",
     "chalk-animation": "^2.0.3",
@@ -22,6 +27,7 @@
     "fs": "^0.0.1-security",
     "gradient-string": "^3.0.0",
     "inquirer": "^12.9.4",
+    "ora": "^8.2.0",
     "simple-git": "^3.28.0"
   },
   "devDependencies": {
