@@ -7,7 +7,8 @@
     "commitia": "./bin/commitia.js"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "link": "npm link"
   },
   "keywords": [],
   "author": "kaua.dev.br",

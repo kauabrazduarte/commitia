@@ -92,7 +92,7 @@ const MODELS: Record<string, { name: string; value: string }[]> = {
   ],
   Google: [
     {
-      name: chalk.hex("#4285F4")("   ✨ Gemini 2.5 Pro (Estado da arte)"),
+      name: chalk.hex("#4285F4")("   ✨ Gemini 2.5 Pro"),
       value: "gemini-2.5-pro",
     },
     {

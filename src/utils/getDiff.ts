@@ -3,7 +3,6 @@ import { promises as fs } from "fs";
 
 export default async function getDiff() {
   const git: SimpleGit = simpleGit();
-
   const status = await git.status();
 
   const stagedFiles = status.staged;
