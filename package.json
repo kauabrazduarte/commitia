@@ -8,9 +8,19 @@
   },
   "scripts": {
     "build": "tsc",
-    "link": "npm link"
+    "link": "npm link",
+    "update:patch": "npm version patch && npm publish",
+    "update:minor": "npm version minor && npm publish",
+    "update:major": "npm version major && npm publish"
   },
-  "keywords": [],
+  "keywords": [
+    "commit",
+    "ia",
+    "git",
+    "vercel",
+    "openai",
+    "claude"
+  ],
   "author": "kaua.dev.br",
   "license": "MIT",
   "type": "commonjs",

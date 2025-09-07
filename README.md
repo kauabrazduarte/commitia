@@ -27,8 +27,6 @@ Gere mensagens de commit inteligentes, consistentes e bonitas usando múltiplos 
 - 💬 **Geração automática de mensagens de commit** com edição/cópia opcional.
 - 🎨 **Interface no terminal bem trabalhada**, amigável e prática.
 - 🪄 **Atalho rápido** para adicionar todos os arquivos (`-A` / `--add`).
-- ⚡ Feito em **TypeScript**.
-- 📦 Versão: `1.0.0`
 
 ---
 
