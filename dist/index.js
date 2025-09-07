@@ -32,4 +32,7 @@ program
         /* empty */
     }
 });
-program.parse();
+program.parse(process.argv);
+process.on("SIGINT", () => {
+    process.exit(0);
+});

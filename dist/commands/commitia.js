@@ -246,9 +246,14 @@ async function commitia(addFiles) {
     // Step 3: Pegar diferenças
     drawInterface(state, chalk_1.default.hex("#9b59b6")("📊 Analisando diferenças no repositório..."));
     await sleep(500);
-    let diffs = {};
+    let diffs = null;
     try {
         diffs = await (0, getDiff_1.default)();
+        if (!diffs) {
+            drawInterface(state, chalk_1.default.yellow("⚠️ Nenhuma diferença encontrada"));
+            await sleep(2000);
+            process.exit(0);
+        }
         state.diffsObtained = true;
     }
     catch (error) {

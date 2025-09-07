@@ -21,5 +21,8 @@ async function getDiff() {
             result[file] = diff;
         }
     }
+    if (Object.keys(result).length === 0) {
+        return null;
+    }
     return result;
 }
