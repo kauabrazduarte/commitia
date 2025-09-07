@@ -5,14 +5,23 @@ import boxen from "boxen";
 import chalkAnimation from "chalk-animation";
 import gradient from "gradient-string";
 import Config from "../config/config";
+import MODELS from "../config/models";
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const claudeGradient = gradient(["#FF6B6B", "#4ECDC4", "#45B7D1"]);
 const greenGradient = gradient(["#11998e", "#38ef7d"]);
 
-function drawHeader() {
+interface SetupState {
+  step: number;
+  provider?: string;
+  apiKey?: string;
+  model?: string;
+}
+
+function drawInterface(state: SetupState, currentPrompt?: string) {
   console.clear();
+
   console.log(
     boxen(
       claudeGradient(
@@ -37,33 +46,35 @@ function drawHeader() {
       .hex("#666666")
       .italic("  ✨ Inteligência Artificial para seus commits ✨\n"),
   );
-}
 
-function showStatus(step: number, message: string) {
   const steps = [
-    { icon: "◯", label: "Provedor" },
-    { icon: "◯", label: "API Key" },
-    { icon: "◯", label: "Modelo" },
-    { icon: "◯", label: "Finalizar" },
+    { icon: "◯", label: "Provedor", completed: state.step > 0 },
+    { icon: "◯", label: "API Key", completed: state.step > 1 },
+    { icon: "◯", label: "Modelo", completed: state.step > 2 },
+    { icon: "◯", label: "Finalizar", completed: state.step > 3 },
   ];
 
-  for (let i = 0; i < step; i++) {
-    steps[i].icon = "✓";
-  }
-  if (step < steps.length) {
-    steps[step].icon = "◆";
-  }
+  steps.forEach((step, index) => {
+    if (step.completed) {
+      step.icon = "✓";
+    } else if (index === state.step) {
+      step.icon = "◆";
+    }
+  });
 
   const statusBar = steps
     .map((s, index) => {
-      const color =
-        index < step ? "#38ef7d" : index === step ? "#45B7D1" : "#666666";
+      const color = s.completed
+        ? "#38ef7d"
+        : index === state.step
+          ? "#45B7D1"
+          : "#666666";
       return chalk.hex(color)(`${s.icon} ${s.label}`);
     })
     .join(chalk.hex("#404040")("  ─  "));
 
   console.log(
-    boxen(statusBar + "\n\n" + chalk.hex("#B0B0B0")(message), {
+    boxen(statusBar, {
       padding: { top: 1, bottom: 1, left: 3, right: 3 },
       margin: { top: 0, bottom: 1 },
       borderStyle: "round",
@@ -73,143 +84,53 @@ function showStatus(step: number, message: string) {
       titleAlignment: "center",
     }),
   );
+
+  if (state.provider || state.apiKey || state.model) {
+    let configInfo = "";
+    if (state.provider) {
+      configInfo +=
+        chalk.hex("#B0B0B0")("Provedor: ") +
+        chalk.hex("#45B7D1")(state.provider) +
+        "   ";
+    }
+    if (state.apiKey) {
+      const maskedKey =
+        state.apiKey.slice(0, 4) + "•".repeat(8) + state.apiKey.slice(-4);
+      configInfo +=
+        chalk.hex("#B0B0B0")("API Key: ") +
+        chalk.hex("#45B7D1")(maskedKey) +
+        "   ";
+    }
+    if (state.model) {
+      configInfo +=
+        chalk.hex("#B0B0B0")("Modelo: ") + chalk.hex("#45B7D1")(state.model);
+    }
+
+    console.log(
+      boxen(configInfo, {
+        padding: { top: 0, bottom: 0, left: 2, right: 2 },
+        borderStyle: "single",
+        borderColor: "#404040",
+        backgroundColor: "#0a0a0a",
+      }),
+    );
+    console.log();
+  }
+
+  if (currentPrompt) {
+    console.log(
+      boxen(currentPrompt, {
+        padding: { top: 0, bottom: 0, left: 2, right: 2 },
+        borderStyle: "round",
+        borderColor: "#45B7D1",
+        backgroundColor: "#0f0f1e",
+      }),
+    );
+    console.log();
+  }
 }
 
-export default async function commitiaLogin() {
-  drawHeader();
-
-  const subtitleAnimation = chalkAnimation.neon(
-    "Configurando seu ambiente de IA...",
-  );
-  subtitleAnimation.start();
-  await sleep(2000);
-  subtitleAnimation.stop();
-
-  drawHeader();
-  showStatus(0, "Escolha seu provedor de IA preferido");
-
-  console.log(chalk.hex("#404040")("━".repeat(60)) + "\n");
-
-  const { provider } = await inquirer.prompt([
-    {
-      type: "list",
-      name: "provider",
-      message: chalk.hex("#45B7D1")("→ Selecione o provedor:"),
-      choices: [
-        { name: chalk.hex("#00D4FF")("   ⚡ XAI (Grok)"), value: "XAI" },
-        { name: chalk.hex("#74AA9C")("   🤖 OpenAI (GPT)"), value: "OpenAI" },
-        {
-          name: chalk.hex("#D4A373")("   🎨 Claude (Anthropic)"),
-          value: "Claude",
-        },
-        {
-          name: chalk.hex("#4285F4")("   🔮 Google (Gemini)"),
-          value: "Google",
-        },
-        { name: chalk.hex("#FF6B6B")("   🐉 NagaIA"), value: "NagaIA" },
-      ],
-    },
-  ]);
-
-  drawHeader();
-  showStatus(
-    1,
-    `Autenticação ${provider} - Sua chave será armazenada com segurança`,
-  );
-
-  console.log(chalk.hex("#404040")("━".repeat(60)) + "\n");
-
-  const { apiKey } = await inquirer.prompt([
-    {
-      type: "password",
-      name: "apiKey",
-      message: chalk.hex("#45B7D1")(`→ Cole sua API Key do ${provider}:`),
-      mask: chalk.hex("#667eea")("●"),
-    },
-  ]);
-
-  drawHeader();
-  showStatus(2, `Escolha o modelo ${provider} para gerar seus commits`);
-
-  console.log(chalk.hex("#404040")("━".repeat(60)) + "\n");
-
-  const models: Record<string, { name: string; value: string }[]> = {
-    XAI: [
-      { name: chalk.hex("#00D4FF")("   ⚡ Grok-1 (Padrão)"), value: "grok-1" },
-      { name: chalk.hex("#00D4FF")("   👁️ Grok-Vision"), value: "grok-vision" },
-    ],
-    OpenAI: [
-      {
-        name: chalk.hex("#74AA9C")("   🧠 GPT-4 (Mais poderoso)"),
-        value: "gpt-4",
-      },
-      {
-        name: chalk.hex("#74AA9C")("   ⚡ GPT-4o (Otimizado)"),
-        value: "gpt-4o",
-      },
-      {
-        name: chalk.hex("#74AA9C")("   💡 GPT-3.5 (Rápido)"),
-        value: "gpt-3.5",
-      },
-    ],
-    Claude: [
-      {
-        name: chalk.hex("#D4A373")("   🎭 Claude 3 Opus"),
-        value: "claude-3-opus",
-      },
-      {
-        name: chalk.hex("#D4A373")("   🎵 Claude 3 Sonnet"),
-        value: "claude-3-sonnet",
-      },
-    ],
-    Google: [
-      { name: chalk.hex("#4285F4")("   ✨ Gemini Pro"), value: "gemini-pro" },
-      { name: chalk.hex("#4285F4")("   🚀 Gemini 1.5"), value: "gemini-1.5" },
-    ],
-    NagaIA: [
-      {
-        name: chalk.hex("#FF6B6B")("   🐉 Naga-1 (Completo)"),
-        value: "naga-1",
-      },
-      { name: chalk.hex("#FF6B6B")("   ⚡ Naga-Lite"), value: "naga-lite" },
-    ],
-  };
-
-  const { model } = await inquirer.prompt([
-    {
-      type: "list",
-      name: "model",
-      message: chalk.hex("#45B7D1")(`→ Selecione o modelo ${provider}:`),
-      choices: models[provider],
-    },
-  ]);
-
-  drawHeader();
-  showStatus(3, "Finalizando configuração...");
-
-  const config = {
-    provider,
-    model,
-    apiKey,
-  };
-
-  console.log("\n");
-  const savingBox = boxen(chalk.hex("#45B7D1")("💾 Salvando configuração..."), {
-    padding: { top: 1, bottom: 1, left: 3, right: 3 },
-    borderStyle: "round",
-    borderColor: "#667eea",
-    align: "center",
-  });
-
-  console.log(savingBox);
-  await sleep(1500);
-
-  Config.define({
-    apiKey,
-    provider,
-    model,
-  });
-
+function drawSuccessScreen(config: any) {
   console.clear();
 
   console.log(
@@ -245,16 +166,20 @@ export default async function commitiaLogin() {
     ) +
     chalk.hex("#667eea")("║") +
     chalk.hex("#B0B0B0")("  Provedor:  ") +
-    chalk.bold.hex("#45B7D1")(provider.padEnd(36)) +
+    chalk.bold.hex("#45B7D1")(config.provider.padEnd(36)) +
     chalk.hex("#667eea")("║\n") +
     chalk.hex("#667eea")("║") +
     chalk.hex("#B0B0B0")("  Modelo:    ") +
-    chalk.bold.hex("#45B7D1")(model.padEnd(36)) +
+    chalk.bold.hex("#45B7D1")(config.model.padEnd(36)) +
     chalk.hex("#667eea")("║\n") +
     chalk.hex("#667eea")("║") +
     chalk.hex("#B0B0B0")("  API Key:   ") +
     chalk.bold.hex("#45B7D1")(
-      (apiKey.slice(0, 4) + "•".repeat(20) + apiKey.slice(-4)).padEnd(36),
+      (
+        config.apiKey.slice(0, 4) +
+        "•".repeat(20) +
+        config.apiKey.slice(-4)
+      ).padEnd(36),
     ) +
     chalk.hex("#667eea")("║\n") +
     chalk.hex("#667eea")("║") +
@@ -315,4 +240,86 @@ export default async function commitiaLogin() {
   console.log(
     "\n" + chalk.hex("#666666").italic("  Feito com ❤️  por kaua.dev.br\n"),
   );
+}
+
+export default async function commitiaLogin() {
+  const state: SetupState = { step: 0 };
+
+  drawInterface(state);
+  const subtitleAnimation = chalkAnimation.neon(
+    "Configurando seu ambiente de IA...",
+  );
+  subtitleAnimation.start();
+  await sleep(2000);
+  subtitleAnimation.stop();
+
+  drawInterface(state, chalk.hex("#45B7D1")("→ Selecione seu provedor de IA:"));
+
+  const { provider } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "provider",
+      message: "",
+      choices: [
+        { name: chalk.hex("#00D4FF")("   ⚡ XAI (Grok)"), value: "XAI" },
+        { name: chalk.hex("#74AA9C")("   🤖 OpenAI (GPT)"), value: "OpenAI" },
+        {
+          name: chalk.hex("#D4A373")("   🎨 Claude (Anthropic)"),
+          value: "Claude",
+        },
+        {
+          name: chalk.hex("#4285F4")("   🔮 Google (Gemini)"),
+          value: "Google",
+        },
+        { name: chalk.hex("#FF6B6B")("   🐉 NagaIA"), value: "NagaIA" },
+      ],
+    },
+  ]);
+
+  state.provider = provider;
+  state.step = 1;
+
+  drawInterface(
+    state,
+    chalk.hex("#45B7D1")(`→ Cole sua API Key do ${provider}:`),
+  );
+
+  const { apiKey } = await inquirer.prompt([
+    {
+      type: "password",
+      name: "apiKey",
+      message: "",
+      mask: chalk.hex("#667eea")("●"),
+    },
+  ]);
+
+  state.apiKey = apiKey;
+  state.step = 2;
+
+  drawInterface(
+    state,
+    chalk.hex("#45B7D1")(`→ Selecione o modelo ${provider}:`),
+  );
+
+  const { model } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "model",
+      message: "",
+      choices: MODELS[provider],
+    },
+  ]);
+
+  state.model = model;
+  state.step = 3;
+
+  drawInterface(state, chalk.hex("#45B7D1")("💾 Salvando configuração..."));
+  await sleep(1500);
+
+  const config = { provider, model, apiKey };
+  Config.define(config);
+
+  state.step = 4;
+
+  drawSuccessScreen(config);
 }

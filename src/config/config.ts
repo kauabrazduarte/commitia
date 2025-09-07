@@ -30,4 +30,12 @@ export default class Config {
     const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
     return config[key] || null;
   }
+
+  static getAll(): ConfigInterface {
+    const config = JSON.parse(
+      fs.readFileSync(configPath, "utf8") ??
+        "{ provider: '', model: '', apiKey: '' }",
+    );
+    return config as ConfigInterface;
+  }
 }
