@@ -1,7 +1,10 @@
 import simpleGit, { SimpleGit } from "simple-git";
 import { promises as fs } from "fs";
 
-export default async function getDiff() {
+export default async function getDiff(): Promise<Record<
+  string,
+  string
+> | null> {
   const git: SimpleGit = simpleGit();
   const status = await git.status();
 
@@ -16,6 +19,10 @@ export default async function getDiff() {
       const diff = await git.diff(["--cached", file]);
       result[file] = diff;
     }
+  }
+
+  if (Object.keys(result).length === 0) {
+    return null;
   }
 
   return result;

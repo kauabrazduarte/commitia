@@ -301,9 +301,16 @@ export default async function commitia(addFiles: boolean) {
   );
   await sleep(500);
 
-  let diffs: Record<string, string> = {};
+  let diffs: Record<string, string> | null = null;
   try {
     diffs = await getDiff();
+
+    if (!diffs) {
+      drawInterface(state, chalk.yellow("⚠️ Nenhuma diferença encontrada"));
+      await sleep(2000);
+      process.exit(0);
+    }
+
     state.diffsObtained = true;
   } catch (error) {
     drawInterface(state, chalk.red(`❌ Erro ao pegar diferenças: ${error}`));
