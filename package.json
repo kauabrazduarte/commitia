@@ -1,7 +1,7 @@
 {
   "name": "commitia",
   "version": "1.0.0",
-  "description": "",
+  "description": "Gerador de mensagens de commit com IA",
   "main": "index.js",
   "bin": {
     "commitia": "./bin/commitia.js"
@@ -10,7 +10,7 @@
     "build": "tsc"
   },
   "keywords": [],
-  "author": "",
+  "author": "kaua.dev.br",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
