@@ -6,7 +6,7 @@ const program = new Command();
 
 program
   .name("commitia")
-  .description("Cria uma mensagem de commit com inteligência artificial")
+  .description("Gere mensagens de commit com inteligência artificial")
   .version("1.0.0")
   .option("-A, --add", "Adiciona arquivos automaticamente antes do commit")
   .action((options) => {
@@ -21,7 +21,7 @@ program
 program
   .command("login")
   .description(
-    "Realiza o login em uma conta da OpenAI/Claude/Google/XAI/NagaIA",
+    "Realiza o login em um provedor de IA (OpenAI/Claude/Google/XAI/NagaIA)",
   )
   .action(() => {
     try {

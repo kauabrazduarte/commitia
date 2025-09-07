@@ -9,6 +9,7 @@ interface ConfigInterface {
 
 const userHome = os.homedir();
 const configPath = `${userHome}/.commitia/config.json`;
+
 if (!fs.existsSync(`${userHome}/.commitia`)) {
   fs.mkdirSync(`${userHome}/.commitia`);
 }
@@ -36,6 +37,7 @@ export default class Config {
       fs.readFileSync(configPath, "utf8") ??
         "{ provider: '', model: '', apiKey: '' }",
     );
+
     return config as ConfigInterface;
   }
 }
