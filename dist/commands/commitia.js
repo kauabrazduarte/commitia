@@ -181,41 +181,22 @@ function drawSuccessScreen(message, action) {
         ? "Commit realizado com sucesso!"
         : "Mensagem copiada para área de transferência!";
     const summaryContent = chalk_1.default.hex("#27ae60")(`${actionEmoji} ${actionText}\n\n`) +
-        chalk_1.default.hex("#8e44ad")("╔════════════════════════════════════════════════════════════╗\n") +
+        chalk_1.default.hex("#8e44ad")("╔══════════════════════════════════════════════════════════╗\n") +
         chalk_1.default.hex("#8e44ad")("║") +
-        chalk_1.default.bold.white("                    📊 RESUMO                            ") +
+        chalk_1.default.bold.white("                   📊 RESUMO                    ") +
         chalk_1.default.hex("#8e44ad")("║\n") +
-        chalk_1.default.hex("#8e44ad")("╠════════════════════════════════════════════════════════════╣\n") +
-        chalk_1.default.hex("#8e44ad")("║                                                            ║\n") +
-        chalk_1.default.hex("#8e44ad")("║") +
-        chalk_1.default.hex("#B0B0B0")("  Ação:      ") +
-        chalk_1.default.bold.hex("#9b59b6")(actionText.slice(0, 44).padEnd(44)) +
-        chalk_1.default.hex("#8e44ad")("║\n") +
-        chalk_1.default.hex("#8e44ad")("║") +
-        chalk_1.default.hex("#B0B0B0")("  Mensagem:  ") +
-        chalk_1.default.hex("#ffffff")(message.slice(0, 44).padEnd(44)) +
-        chalk_1.default.hex("#8e44ad")("║\n") +
-        chalk_1.default.hex("#8e44ad")("║                                                            ║\n") +
-        chalk_1.default.hex("#8e44ad")("╠════════════════════════════════════════════════════════════╣\n") +
-        chalk_1.default.hex("#8e44ad")("║") +
-        chalk_1.default.bold.hex("#e67e22")("                 🎉 PRÓXIMAS AÇÕES 🎉                    ") +
-        chalk_1.default.hex("#8e44ad")("║\n") +
-        chalk_1.default.hex("#8e44ad")("╠════════════════════════════════════════════════════════════╣\n") +
-        chalk_1.default.hex("#8e44ad")("║                                                            ║\n") +
+        chalk_1.default.hex("#8e44ad")("╠══════════════════════════════════════════════════════════╣\n") +
+        chalk_1.default.hex("#8e44ad")("║                                                          ║\n") +
         chalk_1.default.hex("#8e44ad")("║  ") +
-        chalk_1.default.bold.hex("#9b59b6")("commitia") +
-        chalk_1.default.hex("#B0B0B0")(" ─ Gerar novo commit                          ") +
-        chalk_1.default.hex("#8e44ad")("║\n") +
+        chalk_1.default.hex("#B0B0B0")("Ação:     ") +
+        chalk_1.default.bold.hex("#9b59b6")(actionText.slice(0, 40).padEnd(40)) +
+        chalk_1.default.hex("#8e44ad")("  ║\n") +
         chalk_1.default.hex("#8e44ad")("║  ") +
-        chalk_1.default.bold.hex("#9b59b6")("commitia -a") +
-        chalk_1.default.hex("#B0B0B0")(" ─ Adicionar arquivos e fazer commit  ") +
-        chalk_1.default.hex("#8e44ad")("║\n") +
-        chalk_1.default.hex("#8e44ad")("║  ") +
-        chalk_1.default.bold.hex("#9b59b6")("git push") +
-        chalk_1.default.hex("#B0B0B0")(" ─ Enviar para repositório remoto          ") +
-        chalk_1.default.hex("#8e44ad")("║\n") +
-        chalk_1.default.hex("#8e44ad")("║                                                            ║\n") +
-        chalk_1.default.hex("#8e44ad")("╚════════════════════════════════════════════════════════════╝");
+        chalk_1.default.hex("#B0B0B0")("Mensagem: ") +
+        chalk_1.default.hex("#ffffff")(message.slice(0, 40).padEnd(40)) +
+        chalk_1.default.hex("#8e44ad")("  ║\n") +
+        chalk_1.default.hex("#8e44ad")("║                                                          ║\n") +
+        chalk_1.default.hex("#8e44ad")("╚══════════════════════════════════════════════════════════╝");
     console.log((0, boxen_1.default)(summaryContent, {
         padding: { top: 0, bottom: 0, left: 2, right: 2 },
         margin: { top: 1, bottom: 1 },

@@ -202,61 +202,30 @@ function drawSuccessScreen(message: string, action: string) {
   const summaryContent =
     chalk.hex("#27ae60")(`${actionEmoji} ${actionText}\n\n`) +
     chalk.hex("#8e44ad")(
-      "╔════════════════════════════════════════════════════════════╗\n",
+      "╔══════════════════════════════════════════════════════════╗\n",
     ) +
     chalk.hex("#8e44ad")("║") +
-    chalk.bold.white(
-      "                    📊 RESUMO                            ",
-    ) +
+    chalk.bold.white("                   📊 RESUMO                    ") +
     chalk.hex("#8e44ad")("║\n") +
     chalk.hex("#8e44ad")(
-      "╠════════════════════════════════════════════════════════════╣\n",
+      "╠══════════════════════════════════════════════════════════╣\n",
     ) +
     chalk.hex("#8e44ad")(
-      "║                                                            ║\n",
-    ) +
-    chalk.hex("#8e44ad")("║") +
-    chalk.hex("#B0B0B0")("  Ação:      ") +
-    chalk.bold.hex("#9b59b6")(actionText.slice(0, 44).padEnd(44)) +
-    chalk.hex("#8e44ad")("║\n") +
-    chalk.hex("#8e44ad")("║") +
-    chalk.hex("#B0B0B0")("  Mensagem:  ") +
-    chalk.hex("#ffffff")(message.slice(0, 44).padEnd(44)) +
-    chalk.hex("#8e44ad")("║\n") +
-    chalk.hex("#8e44ad")(
-      "║                                                            ║\n",
-    ) +
-    chalk.hex("#8e44ad")(
-      "╠════════════════════════════════════════════════════════════╣\n",
-    ) +
-    chalk.hex("#8e44ad")("║") +
-    chalk.bold.hex("#e67e22")(
-      "                 🎉 PRÓXIMAS AÇÕES 🎉                    ",
-    ) +
-    chalk.hex("#8e44ad")("║\n") +
-    chalk.hex("#8e44ad")(
-      "╠════════════════════════════════════════════════════════════╣\n",
-    ) +
-    chalk.hex("#8e44ad")(
-      "║                                                            ║\n",
+      "║                                                          ║\n",
     ) +
     chalk.hex("#8e44ad")("║  ") +
-    chalk.bold.hex("#9b59b6")("commitia") +
-    chalk.hex("#B0B0B0")(" ─ Gerar novo commit                          ") +
-    chalk.hex("#8e44ad")("║\n") +
+    chalk.hex("#B0B0B0")("Ação:     ") +
+    chalk.bold.hex("#9b59b6")(actionText.slice(0, 40).padEnd(40)) +
+    chalk.hex("#8e44ad")("  ║\n") +
     chalk.hex("#8e44ad")("║  ") +
-    chalk.bold.hex("#9b59b6")("commitia -a") +
-    chalk.hex("#B0B0B0")(" ─ Adicionar arquivos e fazer commit  ") +
-    chalk.hex("#8e44ad")("║\n") +
-    chalk.hex("#8e44ad")("║  ") +
-    chalk.bold.hex("#9b59b6")("git push") +
-    chalk.hex("#B0B0B0")(" ─ Enviar para repositório remoto          ") +
-    chalk.hex("#8e44ad")("║\n") +
+    chalk.hex("#B0B0B0")("Mensagem: ") +
+    chalk.hex("#ffffff")(message.slice(0, 40).padEnd(40)) +
+    chalk.hex("#8e44ad")("  ║\n") +
     chalk.hex("#8e44ad")(
-      "║                                                            ║\n",
+      "║                                                          ║\n",
     ) +
     chalk.hex("#8e44ad")(
-      "╚════════════════════════════════════════════════════════════╝",
+      "╚══════════════════════════════════════════════════════════╝",
     );
 
   console.log(
