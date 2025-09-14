@@ -1,60 +1,11 @@
 import simpleGit, { SimpleGit } from "simple-git";
-import { promises as fs } from "fs";
+import { promises, existsSync } from "fs";
 import path from "path";
-
-const IGNORED_EXTENSIONS = [
-  ".jpg",
-  ".jpeg",
-  ".png",
-  ".gif",
-  ".bmp",
-  ".tiff",
-  ".ico",
-  ".svg",
-  ".webp",
-  ".mp4",
-  ".avi",
-  ".mov",
-  ".wmv",
-  ".flv",
-  ".webm",
-  ".mkv",
-  ".mp3",
-  ".wav",
-  ".flac",
-  ".aac",
-  ".ogg",
-  ".pdf",
-  ".doc",
-  ".docx",
-  ".xls",
-  ".xlsx",
-  ".ppt",
-  ".pptx",
-  ".zip",
-  ".rar",
-  ".7z",
-  ".tar",
-  ".gz",
-  ".exe",
-  ".dll",
-  ".so",
-  ".dylib",
-  ".bin",
-  ".dat",
-  ".db",
-  ".sqlite",
-  ".sqlite3",
-];
-
-const POTENTIALLY_BINARY_EXTENSIONS = [".sql", ".dump"];
+import IGNORED_EXTENSIONS from "../constants/ignored_extensions";
 
 function shouldIgnoreFile(filePath: string): boolean {
   const ext = path.extname(filePath).toLowerCase();
-  return (
-    IGNORED_EXTENSIONS.includes(ext) ||
-    POTENTIALLY_BINARY_EXTENSIONS.includes(ext)
-  );
+  return IGNORED_EXTENSIONS.includes(ext);
 }
 
 export default async function getDiff(): Promise<Record<
@@ -68,12 +19,15 @@ export default async function getDiff(): Promise<Record<
   const result: Record<string, string> = {};
 
   for (const file of stagedFiles) {
-    if (status.created.includes(file)) {
-      const content = await fs.readFile(file, "utf-8");
-      result[file] = content;
-    } else {
-      const diff = await git.diff(["--cached", file]);
-      result[file] = diff;
+    if (existsSync(file)) {
+      if (status.created.includes(file)) {
+        const content = await promises.readFile(file, "utf-8");
+
+        if (content.length <= 128000 * 0.65) result[file] = content;
+      } else {
+        const diff = await git.diff(["--cached", file]);
+        if (diff.length <= 128000 * 0.65) result[file] = diff;
+      }
     }
   }
 

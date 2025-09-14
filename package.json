@@ -1,13 +1,13 @@
 {
   "name": "commitia",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Gerador de mensagens de commit com IA",
   "main": "index.js",
   "bin": {
     "commitia": "./bin/commitia.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js",
     "link": "npm link",
     "update:patch": "npm version patch && npm publish",
     "update:minor": "npm version minor && npm publish",
@@ -45,6 +45,7 @@
   "devDependencies": {
     "@types/chalk-animation": "^1.6.3",
     "@types/figlet": "^1.7.0",
-    "@types/node": "^24.3.1"
+    "@types/node": "^24.3.1",
+    "esbuild": "^0.25.9"
   }
 }
